@@ -218,18 +218,32 @@ const ExploreChartPanel = ({
     setSplitSizes(sizes);
   }, []);
 
-  const refreshCachedQuery = useCallback(() => {
+  const refreshCachedQuery = useCallback((nextFormData?: QueryFormData) => {
+    const formDataToQuery = nextFormData || formData;
     actions.setForceQuery(true);
     actions.postChartFormData(
-      formData,
+      formDataToQuery,
       true,
       timeout ?? 0,
       chart.id,
       undefined,
       ownState,
     );
-    actions.updateQueryFormData(formData, chart.id);
+    actions.updateQueryFormData(formDataToQuery, chart.id);
   }, [actions, chart.id, formData, ownState, timeout]);
+
+  const handleSetControlValue = useCallback(
+    (controlName: string, value: any, ...rest: any[]) => {
+      actions.setControlValue(controlName, value, ...rest);
+      if (controlName === 'optionsBarDatasetColumn') {
+        refreshCachedQuery({
+          ...formData,
+          optionsBarDatasetColumn: value,
+        });
+      }
+    },
+    [actions, formData, refreshCachedQuery],
+  );
 
   const onCollapseChange = useCallback((isOpen: boolean) => {
     let splitSizes: PanelSizes;
@@ -271,7 +285,7 @@ const ExploreChartPanel = ({
             onQuery={onQuery}
             queriesResponse={chart.queriesResponse}
             chartIsStale={chartIsStale}
-            setControlValue={actions.setControlValue}
+            setControlValue={handleSetControlValue}
             timeout={timeout}
             triggerQuery={chart.triggerQuery}
             vizType={vizType}
@@ -285,7 +299,7 @@ const ExploreChartPanel = ({
       </div>
     ),
     [
-      actions.setControlValue,
+      handleSetControlValue,
       chart.annotationData,
       chart.chartAlert,
       chart.chartStackTrace,

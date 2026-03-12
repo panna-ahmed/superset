@@ -45,5 +45,19 @@ export const FEATURED_CHARTS: VizMeta[] = [
       />
     ),
   },
+  {
+    name: VizType.BigNumberTotalFixedSize,
+    icon: (
+      <Icons.BigNumberChartTile
+        iconSize="l"
+        viewBox="0 0 16 14"
+        css={css`
+          path {
+            fill: currentColor;
+          }
+        `}
+      />
+    ),
+  },
   { name: VizType.Pie, icon: <Icons.PieChartOutlined iconSize="l" /> },
 ];

@@ -135,6 +135,16 @@ export default function transformProps(
     columnFormats = {},
     currencyFormats = {},
   } = datasource;
+  const allDatasetColumns = Array.from(
+    new Set(
+      ensureIsArray((datasource as any)?.columns)
+        .map(
+          (column: any) =>
+            column?.column_name ?? column?.label ?? column?.name,
+        )
+        .filter((column: unknown): column is string => Boolean(column)),
+    ),
+  );
   const [queryData] = queriesData;
   const { data = [], label_map = {} } =
     queryData as TimeseriesChartDataResponseResult;
@@ -197,7 +207,17 @@ export default function transformProps(
     yAxisTitlePosition,
     zoomable,
     stackDimension,
+    optionsBarDropdownColumns,
   }: EchartsTimeseriesFormData = { ...DEFAULT_FORM_DATA, ...formData };
+
+  const selectedDropdownColumns = ensureIsArray(optionsBarDropdownColumns)
+    .map(column => String(column))
+    .filter(Boolean);
+  const selectedColumnSet = new Set(selectedDropdownColumns);
+  const datasetColumns =
+    selectedColumnSet.size > 0
+      ? Array.from(selectedColumnSet)
+      : allDatasetColumns;
 
   const refs: Refs = {};
   const groupBy = ensureIsArray(groupby);
@@ -740,6 +760,7 @@ export default function transformProps(
     echartOptions,
     emitCrossFilters,
     formData,
+    datasetColumns,
     groupby: groupBy,
     height,
     labelMap,

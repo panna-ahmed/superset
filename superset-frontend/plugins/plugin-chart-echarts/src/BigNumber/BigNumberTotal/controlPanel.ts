@@ -44,6 +44,35 @@ export default {
       expanded: true,
       controlSetRows: [
         [headerFontSize],
+        [
+          {
+            name: 'use_fixed_font_size',
+            config: {
+              type: 'CheckboxControl',
+              label: t('Use Fixed Big Number Font Size'),
+              renderTrigger: true,
+              default: false,
+              description: t(
+                'Use a fixed pixel size for the main big number instead of scaling it with chart height',
+              ),
+            },
+          },
+        ],
+        [
+          {
+            name: 'fixed_font_size',
+            config: {
+              type: 'TextControl',
+              label: t('Fixed Big Number Font Size'),
+              renderTrigger: true,
+              default: '60',
+              description: t('Pixel size for the main big number'),
+              visibility: ({ controls }) =>
+                controls?.use_fixed_font_size?.value === true,
+              resetOnHide: false,
+            },
+          },
+        ],
         [subtitleControl],
         [subtitleFontSize],
         [showMetricNameControl],

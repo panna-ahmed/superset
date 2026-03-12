@@ -748,7 +748,9 @@ const retainQueryModeRequirements = hiddenFormData =>
 
 function patchBigNumberTotalFormData(form_data, slice) {
   if (
-    form_data.viz_type === 'big_number_total' &&
+    ['big_number_total', 'big_number_total_fixed_size'].includes(
+      form_data.viz_type,
+    ) &&
     !form_data.subtitle &&
     slice?.form_data?.subheader
   ) {
@@ -814,7 +816,9 @@ function mapStateToProps(state) {
   }
 
   if (
-    form_data.viz_type === 'big_number_total' &&
+    ['big_number_total', 'big_number_total_fixed_size'].includes(
+      form_data.viz_type,
+    ) &&
     slice?.form_data?.subheader &&
     (!controls.subtitle?.value || controls.subtitle.value === '')
   ) {

@@ -31,6 +31,7 @@ import { testWithId } from 'src/utils/testUtils';
 import TimeTableChartPlugin from 'src/visualizations/TimeTable';
 import {
   BigNumberTotalChartPlugin,
+  BigNumberTotalFixedSizeChartPlugin,
   EchartsAreaChartPlugin,
   EchartsMixedTimeseriesChartPlugin,
   EchartsPieChartPlugin,
@@ -54,6 +55,9 @@ class MainPreset extends Preset {
         new TableChartPlugin().configure({ key: VizType.Table }),
         new BigNumberTotalChartPlugin().configure({
           key: VizType.BigNumberTotal,
+        }),
+        new BigNumberTotalFixedSizeChartPlugin().configure({
+          key: VizType.BigNumberTotalFixedSize,
         }),
         new EchartsTimeseriesLineChartPlugin().configure({
           key: VizType.Line,

@@ -38,6 +38,8 @@ export type BigNumberTotalFormData = QueryFormData & {
   metric?: QueryFormMetric;
   yAxisFormat?: string;
   forceTimestampFormatting?: boolean;
+  useFixedFontSize?: boolean;
+  fixedFontSize?: number | string;
 };
 
 export type BigNumberWithTrendlineFormData = BigNumberTotalFormData & {
@@ -80,6 +82,8 @@ export type BigNumberVizProps = {
   metricNameFontSize?: number;
   showMetricName?: boolean;
   headerFontSize: number;
+  useFixedFontSize?: boolean;
+  fixedFontSize?: number;
   kickerFontSize?: number;
   subheader?: string;
   subtitle: string;

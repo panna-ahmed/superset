@@ -627,17 +627,17 @@ export function getMinAndMaxFromBounds(
 ): BoundsType | {} {
   if (axisType === AxisType.Value && truncateAxis) {
     const ret: BoundsType = {};
-    if (seriesType === EchartsTimeseriesSeriesType.Bar) {
+    if (seriesType === EchartsTimeseriesSeriesType.Bar || seriesType === EchartsTimeseriesSeriesType.OptionsBar) {
       ret.scale = true;
     }
     if (min !== undefined) {
       ret.min = min;
-    } else if (seriesType !== EchartsTimeseriesSeriesType.Bar) {
+    } else if (seriesType !== EchartsTimeseriesSeriesType.Bar && seriesType !== EchartsTimeseriesSeriesType.OptionsBar) {
       ret.min = 'dataMin';
     }
     if (max !== undefined) {
       ret.max = max;
-    } else if (seriesType !== EchartsTimeseriesSeriesType.Bar) {
+    } else if (seriesType !== EchartsTimeseriesSeriesType.Bar && seriesType !== EchartsTimeseriesSeriesType.OptionsBar) {
       ret.max = 'dataMax';
     }
     return ret;

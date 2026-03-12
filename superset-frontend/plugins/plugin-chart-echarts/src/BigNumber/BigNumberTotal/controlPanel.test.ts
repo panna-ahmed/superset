@@ -72,6 +72,16 @@ describe('BigNumber Total Control Panel Config', () => {
       row.some((control: any) => control.name === 'conditional_formatting'),
     );
     expect(conditionalFormattingRow).toBeTruthy();
+
+    const fixedFontToggleRow = thirdSection.find(row =>
+      row.some((control: any) => control.name === 'use_fixed_font_size'),
+    );
+    expect(fixedFontToggleRow).toBeTruthy();
+
+    const fixedFontSizeRow = thirdSection.find(row =>
+      row.some((control: any) => control.name === 'fixed_font_size'),
+    );
+    expect(fixedFontSizeRow).toBeTruthy();
   });
 
   it('should have y_axis_format override with correct label', () => {

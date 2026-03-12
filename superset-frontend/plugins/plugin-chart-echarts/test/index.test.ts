@@ -36,6 +36,7 @@ import {
   EchartsTreeChartPlugin,
   BigNumberChartPlugin,
   BigNumberTotalChartPlugin,
+  BigNumberTotalFixedSizeChartPlugin,
   EchartsSunburstChartPlugin,
 } from '../src';
 
@@ -60,6 +61,7 @@ test('@superset-ui/plugin-chart-echarts exists', () => {
   expect(EchartsTreeChartPlugin).toBeDefined();
   expect(BigNumberChartPlugin).toBeDefined();
   expect(BigNumberTotalChartPlugin).toBeDefined();
+  expect(BigNumberTotalFixedSizeChartPlugin).toBeDefined();
   expect(EchartsSunburstChartPlugin).toBeDefined();
 });
 
@@ -118,6 +120,9 @@ test('@superset-ui/plugin-chart-echarts-parsemethod-validation', () => {
     }),
     new BigNumberTotalChartPlugin().configure({
       key: VizType.BigNumberTotal,
+    }),
+    new BigNumberTotalFixedSizeChartPlugin().configure({
+      key: VizType.BigNumberTotalFixedSize,
     }),
     new EchartsSunburstChartPlugin().configure({
       key: 'sunburst',

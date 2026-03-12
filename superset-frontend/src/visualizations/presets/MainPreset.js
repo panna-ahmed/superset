@@ -45,11 +45,13 @@ import { CartodiagramPlugin } from '@superset-ui/plugin-chart-cartodiagram';
 import {
   BigNumberChartPlugin,
   BigNumberTotalChartPlugin,
+  BigNumberTotalFixedSizeChartPlugin,
   EchartsPieChartPlugin,
   EchartsBoxPlotChartPlugin,
   EchartsAreaChartPlugin,
   EchartsTimeseriesChartPlugin,
   EchartsTimeseriesBarChartPlugin,
+  EchartsTimeseriesOptionsBarChartPlugin,
   EchartsTimeseriesLineChartPlugin,
   EchartsTimeseriesScatterChartPlugin,
   EchartsTimeseriesSmoothLineChartPlugin,
@@ -107,6 +109,9 @@ export default class MainPreset extends Preset {
         new BigNumberTotalChartPlugin().configure({
           key: VizType.BigNumberTotal,
         }),
+        new BigNumberTotalFixedSizeChartPlugin().configure({
+          key: VizType.BigNumberTotalFixedSize,
+        }),
         new EchartsBoxPlotChartPlugin().configure({ key: VizType.BoxPlot }),
         new BubbleChartPlugin().configure({ key: VizType.LegacyBubble }),
         new BulletChartPlugin().configure({ key: VizType.Bullet }),
@@ -147,6 +152,9 @@ export default class MainPreset extends Preset {
         }),
         new EchartsTimeseriesBarChartPlugin().configure({
           key: VizType.Bar,
+        }),
+        new EchartsTimeseriesOptionsBarChartPlugin().configure({
+          key: VizType.OptionsBar,
         }),
         new EchartsTimeseriesLineChartPlugin().configure({
           key: VizType.Line,

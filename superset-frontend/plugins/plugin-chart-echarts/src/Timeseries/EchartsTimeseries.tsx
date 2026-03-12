@@ -21,6 +21,7 @@ import {
   DTTM_ALIAS,
   BinaryQueryObjectFilterClause,
   AxisType,
+  VizType,
   getTimeFormatter,
   getColumnLabel,
   getNumberFormatter,
@@ -37,6 +38,7 @@ import { formatSeriesName } from '../utils/series';
 import { ExtraControls } from '../components/ExtraControls';
 
 const TIMER_DURATION = 300;
+const MIN_EXTRA_CONTROLS_HEADER_HEIGHT = 60;
 
 export default function EchartsTimeseries({
   formData,
@@ -48,6 +50,7 @@ export default function EchartsTimeseries({
   selectedValues,
   setDataMask,
   setControlValue,
+  datasetColumns,
   legendData = [],
   onContextMenu,
   onLegendStateChanged,
@@ -60,6 +63,10 @@ export default function EchartsTimeseries({
   onLegendScroll,
 }: TimeseriesChartTransformedProps) {
   const { stack } = formData;
+  const vizType = formData.viz_type || (formData as any).vizType;
+  const hasExtraControls =
+    formData.showExtraControls ||
+    vizType === VizType.OptionsBar;
   const echartRef = useRef<EchartsHandler | null>(null);
   // eslint-disable-next-line no-param-reassign
   refs.echartRef = echartRef;
@@ -292,15 +299,24 @@ export default function EchartsTimeseries({
     },
   };
 
+  const reservedExtraControlsHeight = hasExtraControls
+    ? Math.max(extraControlHeight, MIN_EXTRA_CONTROLS_HEADER_HEIGHT)
+    : extraControlHeight;
+  const chartHeight = Math.max(height - reservedExtraControlsHeight, 0);
+
   return (
     <>
       <div ref={extraControlRef}>
-        <ExtraControls formData={formData} setControlValue={setControlValue} />
+        <ExtraControls
+          formData={formData}
+          setControlValue={setControlValue}
+          datasetColumns={datasetColumns}
+        />
       </div>
       <Echart
         ref={echartRef}
         refs={refs}
-        height={height - extraControlHeight}
+        height={chartHeight}
         width={width}
         echartOptions={echartOptions}
         eventHandlers={eventHandlers}

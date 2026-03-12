@@ -46,6 +46,7 @@ export enum EchartsTimeseriesSeriesType {
   Scatter = 'scatter',
   Smooth = 'smooth',
   Bar = 'bar',
+  OptionsBar = 'optionsbar',
   Start = 'start',
   Middle = 'middle',
   End = 'end',
@@ -94,6 +95,12 @@ export type EchartsTimeseriesFormData = QueryFormData & {
   showValue: boolean;
   onlyTotal: boolean;
   showExtraControls: boolean;
+  optionsBarDropdownColumns?: string[];
+  optionsBarVisibleDropdowns?: string[];
+  optionsBarDatasetColumn?: string;
+  optionsBarOrientationLabel?: string;
+  optionsBarStackLabel?: string;
+  optionsBarColumnLabel?: string;
   percentageThreshold: number;
   orientation?: OrientationType;
 } & LegendFormData &
@@ -108,6 +115,7 @@ export type TimeseriesChartTransformedProps =
   BaseTransformedProps<EchartsTimeseriesFormData> &
     ContextMenuTransformedProps &
     CrossFilterTransformedProps & {
+      datasetColumns?: string[];
       legendData?: OptionName[];
       xValueFormatter: TimeFormatter | StringConstructor;
       xAxis: {

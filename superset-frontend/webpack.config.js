@@ -318,6 +318,10 @@ const config = {
     modules: ['node_modules', APP_DIR],
     alias: {
       react: path.resolve(path.join(APP_DIR, './node_modules/react')),
+      '@superset-ui/plugin-chart-echarts': path.resolve(
+        APP_DIR,
+        './plugins/plugin-chart-echarts/src',
+      ),
       // TODO: remove Handlebars alias once Handlebars NPM package has been updated to
       // correctly support webpack import (https://github.com/handlebars-lang/handlebars.js/issues/953)
       handlebars: 'handlebars/dist/handlebars.js',

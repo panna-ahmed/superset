@@ -17,25 +17,25 @@
  * under the License.
  */
 import { t, Behavior } from '@superset-ui/core';
-import controlPanel from './controlPanel';
-import transformProps from './transformProps';
-import buildQuery from './buildQuery';
-import example1 from './images/BigNumber.jpg';
-import example2 from './images/BigNumber2.jpg';
-import thumbnail from './images/thumbnail.png';
-import { BigNumberTotalChartProps, BigNumberTotalFormData } from '../types';
-import { EchartsChartPlugin } from '../../types';
+import controlPanel from './BigNumberTotal/controlPanel';
+import transformProps from './BigNumberTotal/transformProps';
+import buildQuery from './BigNumberTotal/buildQuery';
+import example1 from './BigNumberTotal/images/BigNumber.jpg';
+import example2 from './BigNumberTotal/images/BigNumber2.jpg';
+import thumbnail from './BigNumberTotal/images/thumbnail.png';
+import { BigNumberTotalChartProps, BigNumberTotalFormData } from './types';
+import { EchartsChartPlugin } from '../types';
 
 const metadata = {
   category: t('KPI'),
   description: t(
-    'Showcases a single metric front-and-center. Big number is best used to call attention to a KPI or the one thing you want your audience to focus on.',
+    'Showcases a single metric front-and-center with an optional fixed pixel font size for the main value.',
   ),
   exampleGallery: [
     { url: example1, caption: t('A Big Number') },
     { url: example2, caption: t('With a subheader') },
   ],
-  name: t('Big Number'),
+  name: t('Big Number Total Fixed Size'),
   tags: [
     t('Additive'),
     t('Business'),
@@ -49,13 +49,13 @@ const metadata = {
   behaviors: [Behavior.DrillToDetail],
 };
 
-export default class BigNumberTotalChartPlugin extends EchartsChartPlugin<
+export default class BigNumberTotalFixedSizeChartPlugin extends EchartsChartPlugin<
   BigNumberTotalFormData,
   BigNumberTotalChartProps
 > {
   constructor() {
     super({
-      loadChart: () => import('../BigNumberTotalFixedSize'),
+      loadChart: () => import('./BigNumberTotalFixedSize'),
       metadata,
       buildQuery,
       transformProps,

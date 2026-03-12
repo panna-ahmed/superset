@@ -107,6 +107,27 @@ describe('BigNumberTotal transformProps', () => {
     expect(result.subtitle).toBe('test');
   });
 
+  it('should pass fixed font size config when enabled', () => {
+    const chartProps = {
+      width: 400,
+      height: 300,
+      queriesData: [{ data: [], coltypes: [] }],
+      formData: {
+        ...baseFormData,
+        useFixedFontSize: true,
+        fixedFontSize: '72',
+      },
+      rawFormData: baseRawFormData,
+      hooks: baseHooks,
+      datasource: baseDatasource,
+    };
+    const result = transformProps(
+      chartProps as unknown as BigNumberTotalChartProps,
+    );
+    expect(result.useFixedFontSize).toBe(true);
+    expect(result.fixedFontSize).toBe(72);
+  });
+
   const baseChartProps = {
     width: 400,
     height: 300,

@@ -52,6 +52,8 @@ export default function transformProps(
     subtitle,
     subtitleFontSize,
     forceTimestampFormatting,
+    useFixedFontSize,
+    fixedFontSize,
     timeFormat,
     yAxisFormat,
     conditionalFormatting,
@@ -70,6 +72,7 @@ export default function transformProps(
   const formattedSubtitleFontSize = subtitle?.trim()
     ? (subtitleFontSize ?? 1)
     : (subheaderFontSize ?? 1);
+  const parsedFixedFontSize = Number(fixedFontSize);
   const bigNumber =
     data.length === 0 ? null : parseMetricValue(data[0][metricName]);
 
@@ -114,6 +117,11 @@ export default function transformProps(
     bigNumber,
     headerFormatter,
     headerFontSize,
+    useFixedFontSize,
+    fixedFontSize:
+      useFixedFontSize && Number.isFinite(parsedFixedFontSize)
+        ? parsedFixedFontSize
+        : undefined,
     subheaderFontSize,
     subtitleFontSize: formattedSubtitleFontSize,
     subtitle: formattedSubtitle,

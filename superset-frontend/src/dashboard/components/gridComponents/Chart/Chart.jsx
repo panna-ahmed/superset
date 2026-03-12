@@ -184,6 +184,32 @@ const Chart = props => {
     }, RESIZE_TIMEOUT),
     [props.width, props.height],
   );
+  const refreshOnExtraControlChange = useMemo(
+    () =>
+      debounce(() => {
+        if (chart?.id) {
+          boundActionCreators.refreshChart(chart.id, false, props.dashboardId);
+        }
+      }, 250),
+    [boundActionCreators.refreshChart, chart?.id, props.dashboardId],
+  );
+
+  useEffect(
+    () => () => {
+      refreshOnExtraControlChange.cancel();
+    },
+    [refreshOnExtraControlChange],
+  );
+
+  const handleSetControlValue = useCallback(
+    (name, value) => {
+      props.setControlValue?.(name, value);
+      if (name === 'optionsBarDatasetColumn') {
+        refreshOnExtraControlChange();
+      }
+    },
+    [props.setControlValue, refreshOnExtraControlChange],
+  );
 
   const ownColorScheme = chart.form_data?.color_scheme;
 
@@ -538,7 +564,7 @@ const Chart = props => {
           timeout={timeout}
           triggerQuery={chart.triggerQuery}
           vizType={slice.viz_type}
-          setControlValue={props.setControlValue}
+          setControlValue={handleSetControlValue}
           datasetsStatus={datasetsStatus}
           isInView={props.isInView}
           emitCrossFilters={emitCrossFilters}
