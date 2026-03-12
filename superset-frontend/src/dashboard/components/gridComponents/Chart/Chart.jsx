@@ -51,7 +51,10 @@ import {
   unsetFocusedFilterField,
 } from '../../../actions/dashboardState';
 import { changeFilter } from '../../../actions/dashboardFilters';
-import { refreshChart } from '../../../../components/Chart/chartAction';
+import {
+  postChartFormData,
+  refreshChart,
+} from '../../../../components/Chart/chartAction';
 import { logEvent } from '../../../../logger/actions';
 import {
   getActiveFilters,
@@ -120,6 +123,7 @@ const Chart = props => {
           changeFilter,
           setFocusedFilterField,
           unsetFocusedFilterField,
+          postChartFormData,
           refreshChart,
           logEvent,
         },
@@ -184,31 +188,11 @@ const Chart = props => {
     }, RESIZE_TIMEOUT),
     [props.width, props.height],
   );
-  const refreshOnExtraControlChange = useMemo(
-    () =>
-      debounce(() => {
-        if (chart?.id) {
-          boundActionCreators.refreshChart(chart.id, false, props.dashboardId);
-        }
-      }, 250),
-    [boundActionCreators.refreshChart, chart?.id, props.dashboardId],
-  );
-
-  useEffect(
-    () => () => {
-      refreshOnExtraControlChange.cancel();
-    },
-    [refreshOnExtraControlChange],
-  );
-
   const handleSetControlValue = useCallback(
     (name, value) => {
       props.setControlValue?.(name, value);
-      if (name === 'optionsBarDatasetColumn') {
-        refreshOnExtraControlChange();
-      }
     },
-    [props.setControlValue, refreshOnExtraControlChange],
+    [props.setControlValue],
   );
 
   const ownColorScheme = chart.form_data?.color_scheme;
@@ -351,6 +335,37 @@ const Chart = props => {
   );
 
   formData.dashboardId = dashboardInfo.id;
+
+  const previousOptionsBarDatasetColumn = useRef(
+    formData.optionsBarDatasetColumn,
+  );
+
+  useEffect(() => {
+    const nextColumn = formData.optionsBarDatasetColumn;
+    const prevColumn = previousOptionsBarDatasetColumn.current;
+    previousOptionsBarDatasetColumn.current = nextColumn;
+
+    if (!nextColumn || nextColumn === prevColumn) {
+      return;
+    }
+
+    boundActionCreators.postChartFormData(
+      formData,
+      false,
+      timeout,
+      chart.id,
+      props.dashboardId,
+      dataMask[props.id]?.ownState,
+    );
+  }, [
+    boundActionCreators,
+    chart.id,
+    dataMask,
+    formData,
+    props.dashboardId,
+    props.id,
+    timeout,
+  ]);
 
   const onExploreChart = useCallback(
     async clickEvent => {
