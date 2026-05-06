@@ -69,6 +69,7 @@ import {
   resetDatabaseState,
 } from 'src/database/actions';
 import Mousetrap from 'mousetrap';
+import { makeUrl } from 'src/utils/pathUtils';
 import { DatabaseSelector } from '../DatabaseSelector';
 import CollectionTable from './CollectionTable';
 import Fieldset from './Fieldset';
@@ -310,6 +311,7 @@ function ColumnCollectionTable({
                 control={
                   <Select
                     ariaLabel={t('Data type')}
+                    header={<FormLabel>{t('Data type')}</FormLabel>}
                     options={DATA_TYPES}
                     name="type"
                     allowNewOptions
@@ -780,7 +782,7 @@ class DatasourceEditor extends PureComponent {
       autorun: true,
       isDataset: true,
     });
-    return `/sqllab/?${queryParams.toString()}`;
+    return makeUrl(`/sqllab/?${queryParams.toString()}`);
   }
 
   openOnSqlLab() {

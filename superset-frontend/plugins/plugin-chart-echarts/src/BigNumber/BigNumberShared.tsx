@@ -349,6 +349,7 @@ function BigNumberShared({
           height={maxHeight}
           echartOptions={echartOptions}
           eventHandlers={eventHandlers}
+          vizType={formData?.vizType}
         />
       )
     );
