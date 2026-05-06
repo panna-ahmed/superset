@@ -66,7 +66,11 @@ export interface ExploreChartPanelProps {
       ownState?: JsonObject,
     ) => void;
     updateQueryFormData: (formData: QueryFormData, chartId: number) => void;
-    setControlValue: (controlName: string, value: any, chartId: number) => void;
+    setControlValue: (
+      controlName: string,
+      value: any,
+      validationErrors?: any[],
+    ) => void;
   };
   onQuery?: () => void;
   can_overwrite: boolean;
@@ -233,8 +237,8 @@ const ExploreChartPanel = ({
   }, [actions, chart.id, formData, ownState, timeout]);
 
   const handleSetControlValue = useCallback(
-    (controlName: string, value: any, ...rest: any[]) => {
-      actions.setControlValue(controlName, value, ...rest);
+    (controlName: string, value: any, validationErrors?: any[]) => {
+      actions.setControlValue(controlName, value, validationErrors);
       if (controlName === 'optionsBarDatasetColumn') {
         refreshCachedQuery({
           ...formData,
